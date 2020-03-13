@@ -9,9 +9,22 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
-    """
-    YOUR CODE HERE
-    """
+    # cycle over array elements
+    for i in range(length):
+        # get difference of limit and current weight
+        diff = limit - weights[i]
+
+        # Check if current weight exist in cache
+        cached = hash_table_retrieve(ht, diff)
+        print(cached)
+
+        if cached is None:
+            hash_table_insert(ht, weights[i], i)
+        else:
+            if cached < i:
+                return (i, cached)
+            else:
+                return (cached, i)
 
     return None
 
