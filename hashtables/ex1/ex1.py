@@ -5,25 +5,20 @@ from hashtables import (HashTable,
 
 
 def get_indices_of_item_weights(weights, length, limit):
-    ht = HashTable(16)
 
-    # cycle over array elements
-    for i in range(length):
-        # get difference of limit and current weight
-        diff = limit - weights[i]
+    ht = HashTable(length)
 
-        # Check if current weight exist in cache
-        cached = hash_table_retrieve(ht, diff)
-        print(cached)
+    for index, weight in enumerate(weights):
+        hash_table_insert(ht, weight, index)
 
-        if cached is None:
-            hash_table_insert(ht, weights[i], i)
-        else:
-            if cached < i:
-                return (i, cached)
+    for index, weight in enumerate(weights):
+        key = limit - weight
+        entry = hash_table_retrieve(ht, key)
+        if entry is not None:
+            if index > entry:
+                return index, entry
             else:
-                return (cached, i)
-
+                return entry, index
     return None
 
 
