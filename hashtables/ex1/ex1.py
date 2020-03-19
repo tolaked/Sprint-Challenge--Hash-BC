@@ -1,18 +1,24 @@
 #  Hint:  You may not need all of these.  Remove the unused functions.
 from hashtables import (HashTable,
                         hash_table_insert,
-                        hash_table_remove,
-                        hash_table_retrieve,
-                        hash_table_resize)
+                        hash_table_retrieve)
 
 
 def get_indices_of_item_weights(weights, length, limit):
-    ht = HashTable(16)
 
-    """
-    YOUR CODE HERE
-    """
+    ht = HashTable(length)
 
+    for index, weight in enumerate(weights):
+        hash_table_insert(ht, weight, index)
+
+    for index, weight in enumerate(weights):
+        key = limit - weight
+        entry = hash_table_retrieve(ht, key)
+        if entry is not None:
+            if index > entry:
+                return index, entry
+            else:
+                return entry, index
     return None
 
 
